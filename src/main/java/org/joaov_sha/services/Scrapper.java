@@ -19,14 +19,17 @@ public class Scrapper {
     
     public Scrapper(){}
 
-    public static void scrap(List<String> urlArquivos, String caminhoPasta, String caminhoZip){
+    public static void scrap(List<String> urlArquivos, String caminhoPasta){
 
         try {
             Files.createDirectories(Paths.get(caminhoPasta));
+
+            String caminhoZip = System.getProperty("user.home") + "/Downloads/";
             baixarEZiparArquivos(urlArquivos, caminhoZip);
-            JOptionPane.showConfirmDialog(null, "Todos os arquivos foram baixados e compactados com sucesso!\n Este estão disponíveis em: " + caminhoPasta, "Sucesso!", 0);
+
+            JOptionPane.showMessageDialog(null, "Todos os arquivos foram baixados e compactados com sucesso!\nOs arquivos estão disponíveis em: " + caminhoZip, "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            System.out.println("Erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro durante o processo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -34,6 +37,7 @@ public class Scrapper {
         try(ZipOutputStream zipar = new ZipOutputStream(new FileOutputStream(caminhoZip))){
             for (String url : urlArquivos) {
                 String nomeDoArquivo = url.substring(url.lastIndexOf("/") + 1);
+                
                 Path arquivoTemporario = Files.createTempFile("download_", "_" + nomeDoArquivo);
                 
                 baixarArquivo(url, arquivoTemporario.toString());
