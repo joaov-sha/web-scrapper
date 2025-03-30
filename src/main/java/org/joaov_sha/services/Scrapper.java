@@ -20,14 +20,18 @@ public class Scrapper {
     public Scrapper(){}
 
     public static void scrap(List<String> urlArquivos, String caminhoPasta){
+        try{
+            Path caminho = Paths.get(caminhoPasta);
 
-        try {
-            Files.createDirectories(Paths.get(caminhoPasta));
+            if(Files.isDirectory(caminho)){
+                caminhoPasta = caminho.resolve("arquivo_zipado.zip").toString();
+            }
 
-            String caminhoZip = System.getProperty("user.home") + "/Downloads/";
-            baixarEZiparArquivos(urlArquivos, caminhoZip);
+            Files.createDirectories(Paths.get(caminhoPasta).getParent());
 
-            JOptionPane.showMessageDialog(null, "Todos os arquivos foram baixados e compactados com sucesso!\nOs arquivos estão disponíveis em: " + caminhoZip, "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            baixarEZiparArquivos(urlArquivos, caminhoPasta);
+
+            JOptionPane.showMessageDialog(null, "Todos os arquivos foram baixados e compactados com sucesso!\nOs arquivos estão disponíveis em: " + caminhoPasta, "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Erro durante o processo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }

@@ -33,6 +33,6 @@ public class Main {
             urlsDeArquivos.add(urlArquivo);
         }
 
-        Scrapper.scrap(urlsDeArquivos, caminhoPastaDownloads);
+        Scrapper.scrap(urlsDeArquivos, caminhoPastaDownloads + "arquivos_compactados.zip");
     }
 }
