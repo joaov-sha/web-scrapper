@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.joaov_sha.services.Scrapper;
+import org.joaov_sha.services.Downloader;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,6 +33,6 @@ public class Main {
             urlsDeArquivos.add(urlArquivo);
         }
 
-        Scrapper.scrap(urlsDeArquivos, caminhoPastaDownloads + "arquivos_compactados.zip");
+        Downloader.downloadECompactacao(urlsDeArquivos, caminhoPastaDownloads + "arquivos_compactados.zip");
     }
 }
