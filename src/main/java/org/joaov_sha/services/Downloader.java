@@ -19,12 +19,13 @@ public class Downloader {
     
     public Downloader(){}
 
+    // Este código obtem o caminho da pasta onde o arquivo será salvo, caso este seja um diretório este, adiciona o arquivos em uma pasta criada dentro do diretório e logo após cria o arquivo zip.
     public static void downloadECompactacao(List<String> urlArquivos, String caminhoPasta){
         try{
             Path caminho = Paths.get(caminhoPasta);
 
             if(Files.isDirectory(caminho)){
-                caminhoPasta = caminho.resolve("arquivo_zipado.zip").toString();
+                caminhoPasta = caminho.resolve("arquivos_baixados").toString();
             }
 
             Files.createDirectories(Paths.get(caminhoPasta).getParent());
@@ -37,6 +38,7 @@ public class Downloader {
         }
     }
 
+    // Cógio responsável pela obtenção do nome do arquivo a ser salvo como arquivo zip
     public static void baixarEZiparArquivos(List<String> urlArquivos, String caminhoZip) throws IOException{
         try(ZipOutputStream zipar = new ZipOutputStream(new FileOutputStream(caminhoZip))){
             for (String url : urlArquivos) {
@@ -53,6 +55,7 @@ public class Downloader {
         }
     }
 
+    // Código responsável pelo download dos arquivos
     public static void baixarArquivo(String urlArquivo, String caminhoPasta) throws IOException{
         URL url = new URL(urlArquivo);
         try(InputStream entrada = url.openStream()){
@@ -60,6 +63,7 @@ public class Downloader {
         }
     }
 
+    // Código responsável pela compactação dos arquivos
     public static void adicionarArquivosParaZip(Path arquivoTemporario, String nomeDoArquivo, ZipOutputStream zipar) throws IOException{
         try(FileInputStream fis = new FileInputStream(arquivoTemporario.toFile())){
             zipar.putNextEntry(new ZipEntry(nomeDoArquivo));
